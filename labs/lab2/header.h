@@ -21,9 +21,10 @@ double Distance(point a, point b);
 
 
 enum triangle_type {
-    tArbitrary = 0, 
-    tIsoscel = 1,   
-    tEqui = 2       
+    tInvalid = -1,
+    tArbitrary = 0,
+    tIsoscel = 1,
+    tEqui = 2
 };
 
 int Check_triangle_type(double xa, double ya, double xb, double yb, double xc, double yc);

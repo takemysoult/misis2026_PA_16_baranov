@@ -46,12 +46,11 @@ double Distance(point a, point b) {
 
 
 int Check_triangle_type(double xa, double ya, double xb, double yb, double xc, double yc) {
+    const double tolerance = 1e-9;
+    if (Square(xa, ya, xb, yb, xc, yc) < tolerance) return -1;
     double ab = Distance(xa, ya, xb, yb);
     double bc = Distance(xb, yb, xc, yc);
     double ca = Distance(xc, yc, xa, ya);
-    const double tolerance = 1e-9;
-    if (ab == 0.0 || bc == 0.0 || ca == 0.0 ||
-        ab + bc <= ca || ab + ca <= bc || bc + ca <= ab) return 0;
     bool ab_eq_bc = absoluteValue(ab - bc) < tolerance;
     bool bc_eq_ca = absoluteValue(bc - ca) < tolerance;
     bool ca_eq_ab = absoluteValue(ca - ab) < tolerance;

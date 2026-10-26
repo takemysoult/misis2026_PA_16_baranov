@@ -28,7 +28,14 @@ int main() {
          << Check_triangle_type(0, 0, 3, 0, 0, 4) << " (0 means arbitrary)\n";
     cout << "(0,0),(2,0),(1,1.7320508075688772) type = "
          << static_cast<int>(Check_triangle_type_new(0, 0, 2, 0, 1, 1.7320508075688772))
-         << " (2 means equilateral)\n\n";
+         << " (2 means equilateral)\n";
+    cout << "(0,0),(4,0),(2,5) type = "
+         << Check_triangle_type(0, 0, 4, 0, 2, 5) << " (1 means isosceles)\n";
+    cout << "(0,0),(1,1),(2,2) type = "
+         << Check_triangle_type(0, 0, 1, 1, 2, 2) << " (-1 means points do not form a triangle)\n";
+    cout << "(1,1),(1,1),(3,2) type = "
+         << static_cast<int>(Check_triangle_type_new(1, 1, 1, 1, 3, 2))
+         << " (-1 means points do not form a triangle)\n\n";
 
     cout << "5. Overload using point structure\n";
     point a = {0, 0};
