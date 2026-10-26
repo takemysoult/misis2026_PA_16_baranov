@@ -20,10 +20,3 @@
 - `main.cpp` — демонстрация работы функций, в том числе на крайних случаях;
 - `tests/tests.cpp` — модульные тесты (Microsoft C++ Unit Test Framework), начиная со второй лабораторной.
 
-## Сборка
-
-```bash
-g++ -std=c++17 labs/lab4/main.cpp labs/lab4/source.cpp -o lab4
-```
-
-Тесты подключаются в Visual Studio проектом «Native Unit Test Project»: в него добавляются `tests/tests.cpp` и `source.cpp` соответствующей лабораторной. Тесты второй лабораторной также проверяют функции первой, поэтому для них добавляется ещё и `labs/lab1/source.cpp`.
