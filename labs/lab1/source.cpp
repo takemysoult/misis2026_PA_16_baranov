@@ -1,7 +1,8 @@
 #include "header.h"
 
 long long factorial(int n) {
-    if (n < 0 || n > 20) return -1; 
+    // 21! уже не влезает в long long
+    if (n < 0 || n > 20) return -1;
     long long result = 1;
     for (int i = 2; i <= n; ++i) result *= i;
     return result;
@@ -10,6 +11,7 @@ long long factorial(int n) {
 int countDigits(long long number) {
     int count = 0;
     if (number < 0) number = -number;
+    // do-while, чтобы у нуля была одна цифра
     do {
         ++count;
         number /= 10;
@@ -57,6 +59,7 @@ int lastDigit(long long number) {
 long long removeFirstAndLastDigits(long long number) {
     if (number < 0) number = -number;
     if (number < 10) return 0;
+    // divisor = 10^(кол-во цифр - 1), например для 1231 это 1000
     long long divisor = 1;
     while (number / divisor >= 10) divisor *= 10;
     return (number % divisor) / 10;
@@ -70,12 +73,14 @@ long long swapFirstAndLastDigits(long long number) {
     int first = static_cast<int>(number / divisor);
     int last = static_cast<int>(number % 10);
     long long middle = (number % divisor) / 10;
+    // собираем обратно: последняя цифра в начало, первая в конец
     return static_cast<long long>(last) * divisor + middle * 10 + first;
 }
 
 void countBinaryDigits(unsigned int number, int& zeros, int& ones) {
     zeros = 0;
     ones = 0;
+    // смотрим младший бит и сдвигаем вправо
     do {
         if ((number & 1U) != 0U) ++ones;
         else ++zeros;
@@ -89,6 +94,7 @@ double integerPower(int base, int exponent, bool& valid) {
         valid = false;
         return 0.0;
     }
+    // long long, чтобы -INT_MIN не переполнился
     long long power = exponent;
     bool negativeExponent = power < 0;
     if (negativeExponent) power = -power;

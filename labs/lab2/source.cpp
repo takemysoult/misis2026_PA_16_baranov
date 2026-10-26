@@ -5,7 +5,7 @@ namespace {
         return value < 0.0 ? -value : value;
     }
 
-    
+    // корень методом Ньютона, т.к. sqrt из cmath брать нельзя
     double squareRoot(double value) {
         if (value < 0.0) return -1.0;
         if (value == 0.0) return 0.0;
@@ -26,7 +26,7 @@ double Distance(double x1, double y1, double x2, double y2) {
 }
 
 double Square(double xa, double ya, double xb, double yb, double xc, double yc) {
-    
+    // половина модуля векторного произведения AB x AC
     double determinant = (xb - xa) * (yc - ya) - (yb - ya) * (xc - xa);
     return absoluteValue(determinant) / 2.0;
 }
@@ -35,6 +35,7 @@ double Distance_to_line(double xa, double ya,
                         double x1, double y1, double x2, double y2) {
     double lineLength = Distance(x1, y1, x2, y2);
     if (lineLength == 0.0) return -1.0;
+    // удвоенная площадь треугольника делить на основание = высота
     double numerator = absoluteValue((x2 - x1) * (y1 - ya) -
                                      (x1 - xa) * (y2 - y1));
     return numerator / lineLength;
@@ -47,10 +48,12 @@ double Distance(point a, point b) {
 
 int Check_triangle_type(double xa, double ya, double xb, double yb, double xc, double yc) {
     const double tolerance = 1e-9;
+    // нулевая площадь -> точки на одной прямой или совпадают
     if (Square(xa, ya, xb, yb, xc, yc) < tolerance) return -1;
     double ab = Distance(xa, ya, xb, yb);
     double bc = Distance(xb, yb, xc, yc);
     double ca = Distance(xc, yc, xa, ya);
+    // double сравниваем с погрешностью, а не через ==
     bool ab_eq_bc = absoluteValue(ab - bc) < tolerance;
     bool bc_eq_ca = absoluteValue(bc - ca) < tolerance;
     bool ca_eq_ab = absoluteValue(ca - ab) < tolerance;

@@ -2,6 +2,7 @@
 #include "header.h"
 using namespace std;
 
+// текст ошибки по коду из header.h
 void printErrorMessage(int error) {
     if (error == ERROR_BIT_INDEX) cout << "error: bit index is out of range\n";
     else if (error == ERROR_PRECISION) cout << "error: precision must be positive\n";
@@ -9,6 +10,7 @@ void printErrorMessage(int error) {
     else cout << "error: unknown error code " << error << '\n';
 }
 
+// show-функции печатают номер случая, входные данные и результат
 void showGcd(int caseNumber, int a, int b) {
     cout << caseNumber << ".\n";
     cout << "a = " << a << ", b = " << b << '\n';
@@ -105,6 +107,7 @@ int main() {
     cout << "sum_1(n) = " << sum_1(2000) << " (terms from 1 to 1/n)\n";
     cout << "sum_2(n) = " << sum_2(2000) << " (terms from 1/n to 1)\n";
     cout << "sum_1(n) - sum_2(n) = " << sum_1(2000) - sum_2(2000) << '\n';
+    // в sum_1 маленькие 1/i прибавляются к уже большой сумме и часть их битов теряется
     cout << "sum_2 is more accurate: small terms are added first, so they are not lost against a large sum\n";
     cout << "n = 0\n";
     cout << "sum_1(n) = " << sum_1(0) << ", sum_2(n) = " << sum_2(0) << '\n';

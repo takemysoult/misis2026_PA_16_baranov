@@ -10,6 +10,7 @@ namespace {
     }
 
     int absoluteValue(int value) {
+        // -INT_MIN в int не помещается
         if (value == INT_MIN) throw ERROR_ARGUMENT_RANGE;
         return value < 0 ? -value : value;
     }
@@ -24,6 +25,7 @@ namespace {
         return gcdRecursiveStep(b, a % b);
     }
 
+    // быстрое возведение: x^n = (x^(n/2))^2, и еще * x если n нечетное
     double powerStep(double base, long long exponent) {
         if (exponent == 0) return 1.0;
         double half = powerStep(base, exponent / 2);
@@ -44,6 +46,7 @@ double hyperbola(double x) {
 double squareRoot(double x) {
     if (x < 0.0) throw ERROR_NEGATIVE_ROOT;
     if (x == 0.0) return 0.0;
+    // метод Ньютона
     double guess = x >= 1.0 ? x : 1.0;
     for (int i = 0; i < 100; ++i) {
         double next = (guess + x / guess) / 2.0;
@@ -71,6 +74,7 @@ void chart(func f, double a, double b, int n) {
         return;
     }
     for (int i = 0; i < n; ++i) {
+        // x считаем от a каждый раз, а не прибавляем шаг, чтобы не копилась ошибка
         double x = n == 1 ? a : a + (b - a) * i / (n - 1);
         cout << "x = " << x << "\t";
         try {
@@ -83,6 +87,7 @@ void chart(func f, double a, double b, int n) {
 }
 
 void printReversedDigits(int number) {
+    // через long long, т.к. -INT_MIN не влезает в int
     long long value = number;
     if (value < 0) value = -value;
     printReversedDigitsStep(value);
@@ -114,6 +119,7 @@ double power(double base, int exponent) {
 
 double calculate(const char* expression) {
     if (expression == nullptr) throw ERROR_INVALID_EXPRESSION;
+    // ровно 3 символа: цифра, знак, цифра
     if (!isDigit(expression[0]) || expression[1] == '\0' ||
         !isDigit(expression[2]) || expression[3] != '\0') throw ERROR_INVALID_EXPRESSION;
     double left = expression[0] - '0';

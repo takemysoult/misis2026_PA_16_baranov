@@ -2,6 +2,7 @@
 #include "header.h"
 using namespace std;
 
+// текст ошибки по коду из header.h
 void printErrorMessage(int error) {
     if (error == ERROR_DIVISION_BY_ZERO) cout << "error: division by zero\n";
     else if (error == ERROR_NEGATIVE_ROOT) cout << "error: root of a negative number\n";
@@ -12,6 +13,7 @@ void printErrorMessage(int error) {
     else cout << "error: unknown error code " << error << '\n';
 }
 
+// результат сначала сохраняем в переменную, чтобы при throw не напечаталась половина строки
 void showHyperbola(int caseNumber, double x) {
     cout << caseNumber << ".\n";
     cout << "x = " << x << '\n';

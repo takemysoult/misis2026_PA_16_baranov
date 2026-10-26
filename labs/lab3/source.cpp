@@ -6,6 +6,7 @@ using std::cout;
 
 namespace {
     const double PI = 3.14159265358979323846;
+    // 2pi разбито на две части, так меньше теряется точность при больших x
     const double TWO_PI_HIGH = 6.28318530717958623200;
     const double TWO_PI_LOW = 2.44929359829470635445e-16;
     const double MAX_SIN_ARGUMENT = 1e15;
@@ -23,6 +24,7 @@ namespace {
         if (index < 0 || index >= BITS_IN_INT) throw ERROR_BIT_INDEX;
     }
 
+    // приводим угол к [-pi, pi], иначе ряд для x = 1000 считает ерунду
     double reduceAngle(double x) {
         double turnsExact = x / TWO_PI_HIGH;
         double turns = static_cast<double>(static_cast<long long>(turnsExact >= 0.0 ? turnsExact + 0.5 : turnsExact - 0.5));
@@ -34,9 +36,11 @@ namespace {
 }
 
 int gcd(int a, int b) {
+    // у INT_MIN нет положительной пары в int
     if (a == INT_MIN || b == INT_MIN) throw ERROR_ARGUMENT_RANGE;
     a = absoluteValue(a);
     b = absoluteValue(b);
+    // без этих проверок с нулем цикл бесконечный
     if (a == 0) return b;
     if (b == 0) return a;
     while (a != b) {
@@ -47,6 +51,7 @@ int gcd(int a, int b) {
 }
 
 void print_bin(short number) {
+    // unsigned, потому что сдвиг отрицательного числа тянет единицы и цикл не заканчивается
     unsigned short bits = static_cast<unsigned short>(number);
     do {
         cout << (bits & 1U);
@@ -63,6 +68,7 @@ void print_mem_bin(short number) {
 }
 
 void dispBinary(unsigned char u) {
+    // маска 10000000 идет вправо до 00000001
     for (unsigned char mask = 128; mask > 0; mask = static_cast<unsigned char>(mask >> 1)) {
         if ((u & mask) != 0) cout << '1';
         else cout << '0';
@@ -98,10 +104,12 @@ int clearBit(int number, int index) {
 
 double taylorExp(double x, double eps) {
     if (!(eps > 0.0)) throw ERROR_PRECISION;
+    // для отрицательных x ряд знакопеременный и теряет точность, поэтому e^-x = 1 / e^x
     if (x < 0.0) return 1.0 / taylorExp(-x, eps);
     double term = 1.0;
     double sum = 1.0;
     int n = 1;
+    // очередной член x^n / n! получаем из предыдущего
     while (term > eps * sum) {
         term *= x / n;
         sum += term;
@@ -117,6 +125,7 @@ double taylorSin(double x, double eps) {
     double term = angle;
     double sum = angle;
     int n = 1;
+    // x - x^3/3! + x^5/5! - ...
     while (absoluteValue(term) > eps) {
         term *= -angle * angle / ((2.0 * n) * (2.0 * n + 1.0));
         sum += term;
